@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './header.css'
 
+import { UserContext } from '../service/UserContext';
+
 function Header() {
 
-  const [user, setUser] = useState({})
+
+  const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const options = {
       method: 'GET',
@@ -39,13 +43,14 @@ function Header() {
   return (
     <header>
         <h1>Booksters website</h1>
+
         
         <div className="user-status-container">
           {user !== undefined && user.role && <>
             <p>Browsing as {user.role.toLowerCase()} {user.username}</p>
             <button className='signout-btn' onClick={signOut}>Sign out</button>
           </>}
-          {user === undefined || user.role === undefined && <>
+          {(user === undefined || user.role === undefined) && <>
             <p>Browsing as guest...</p>
             <button className='signout-btn'>Sign in</button>
           </>}
