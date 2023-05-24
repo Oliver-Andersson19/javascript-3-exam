@@ -1,0 +1,33 @@
+header {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 2em;
+
+    background-color: lightgray;
+}
+
+header h1 {
+    font-weight: 400;
+}
+
+.user-status-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+
+    position: absolute;
+    right: 1em;
+
+    height: 100%;
+
+}
+
+.user-status-container .signout-btn {
+    padding: .5rem 1rem;
+}
