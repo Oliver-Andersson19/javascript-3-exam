@@ -1,33 +1,26 @@
 import React from 'react'
+import { search } from '../service/searchService';
 
-function SearchBar(props) {
+
+
+function SearchBar({setBooks}) {
 
     let timeoutId;
 
-    function handleChange(e) { // Sök om användaren inte skrivit något nytt på en stund
+    function handleChange(e) { 
         const query = e.target.value
         
         clearTimeout(timeoutId)
-        timeoutId = setTimeout(async () => { // hantera sökning här inne
-
-            const options = {
-                method: 'GET',
-                headers: {
-                  'Authorization': 'Bearer '+ sessionStorage.getItem("JWT_TOKEN"),
-                  'Content-Type': "application/json"
-                }
-            }
-          
-            let result = await fetch("http://127.0.0.1:3000/library/books/search?q=" + query, options);
-            if(result.status === 200) {
-                result = await result.json()    
-                props.setBooks(result)
-            }
+        timeoutId = setTimeout(async () => {// Gör sökning om användaren inte skrivit något nytt på en stund
+            setBooks(await search(query)) // kommer från searchService
         }, 1500)
     }
 
     return (
-        <input type="text" placeholder='Search...' onChange={handleChange}/>
+        <input type="text"
+            placeholder='Search...'
+            onChange={handleChange}
+            data-testid="searchbar"/>
     )
 }
 

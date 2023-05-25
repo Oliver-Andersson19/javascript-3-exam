@@ -23,7 +23,7 @@ function AdminBookView() {
             usersResult = await usersResult.json()
             booksResult = await booksResult.json()
             setUsers(usersResult);
-            setBooks(booksResult);
+            setBooks(booksResult.books);
 
             console.log(usersResult)
             console.log(booksResult)

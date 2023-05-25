@@ -17,7 +17,7 @@ function UserBookView() {
       let booksResult = await fetch("http://127.0.0.1:3000/library/books", options);
       if(booksResult.status === 200) {
         booksResult = await booksResult.json()
-        setBooks(booksResult);
+        setBooks(booksResult.books);
       } else {
         console.log("No valid JWT");
       }

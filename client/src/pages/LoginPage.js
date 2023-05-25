@@ -45,7 +45,7 @@ function LoginPage() {
           <p>No account? Sign up <Link to="/register" className='register-link'>here!</Link></p>
 
           <button onClick={handleSubmit} className="login-btn">Login</button>
-          <Link to="/books" className='register-btn'>Proceed as guest user</Link>
+          <Link to="/books" className='register-btn' data-testid="guest-login">Proceed as guest user</Link>
       </form>
     </section>
     </>
