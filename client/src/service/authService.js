@@ -19,12 +19,13 @@ async function handleLogin(e, credentials) {
       return true;
     
     } else {
-      // Ge annars tillbaka texten
+      // Ge annars tillbaka felmeddelande texten
       return await response.text()
     }
   
     
 }
+
 
 async function handleRegister(e, credentials) {
     e.preventDefault()
@@ -44,5 +45,23 @@ async function handleRegister(e, credentials) {
 }
 
 
-const authService = { handleLogin, handleRegister }
+async function fetchProfileData() {
+  const options = {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer '+ sessionStorage.getItem("JWT_TOKEN"), 
+    }
+  }
+  
+  let result = await fetch("http://127.0.0.1:3000/library/profile", options);
+  
+  if(result.status === 200) {
+    result = await result.json()
+    return result.user
+  }
+
+}
+
+
+const authService = { handleLogin, handleRegister, fetchProfileData }
 export default authService

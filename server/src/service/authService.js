@@ -17,6 +17,7 @@ function authenticate(userDetails) {
 
 function register(userDetails) {
   const user = userRepository.getUser(userDetails.username);
+
   if(user !== undefined) {
     let error = new Error("User already exist");
     error.name = "UserAlreadyExistException";

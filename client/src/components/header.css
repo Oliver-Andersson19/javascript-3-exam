@@ -1,4 +1,4 @@
-header {
+.page-header {
     position: relative;
 
     display: flex;
@@ -10,7 +10,7 @@ header {
     background-color: lightgray;
 }
 
-header h1 {
+.page-header h1 {
     font-weight: 400;
 }
 
@@ -28,6 +28,14 @@ header h1 {
 
 }
 
-.user-status-container .signout-btn {
+.user-status-container .sign-btn {
     padding: .5rem 1rem;
+
+    border: none;
+
+    color: white;
+    background-color: gray;
+
+    text-decoration: none;
+    cursor: pointer;
 }

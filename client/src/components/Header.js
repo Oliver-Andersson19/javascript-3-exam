@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import authService from '../service/authService';
 import './header.css'
 
 import { UserContext } from '../service/UserContext';
@@ -10,49 +11,35 @@ function Header() {
   const {user, setUser} = useContext(UserContext);
   const navigate = useNavigate();
 
-  
-  useEffect(() => {
-    const options = {
-      method: 'GET',
-      headers: {
-          'Authorization': 'Bearer '+ sessionStorage.getItem("JWT_TOKEN"), 
-      }
-    }
 
-    async function fetchProfileData() {
-      let result = await fetch("http://127.0.0.1:3000/library/profile", options);
-      
-      if(result.status === 200) {
-        result = await result.json()
-        setUser(result.user)
-      } else {
-        console.log("No valid JWT")
-      }
-    }
-
+  useEffect( () => {
     
-    fetchProfileData();
+    async function fetchProfileData() {
+      const result = await authService.fetchProfileData(); 
+      setUser(result)
+    }
+
+    fetchProfileData()
   }, [])
 
   function signOut() {
     sessionStorage.removeItem("JWT_TOKEN")
     setUser({})
-    setTimeout(() => navigate("/login"), 1000);
+    navigate("/login");
   }
  
   return (
-    <header>
+    <header className='page-header'>
         <h1>Booksters website</h1>
 
-        
         <div className="user-status-container">
           {user !== undefined && user.role && <>
             <p>Browsing as {user.role.toLowerCase()} {user.username}</p>
-            <button className='signout-btn' onClick={signOut}>Sign out</button>
+            <button className='sign-btn' onClick={signOut}>Sign out</button>
           </>}
           {(user === undefined || user.role === undefined) && <>
             <p>Browsing as guest...</p>
-            <button className='signout-btn'>Sign in</button>
+            <Link to="/login" className='sign-btn'>Sign in</Link>
           </>}
 
         </div>
