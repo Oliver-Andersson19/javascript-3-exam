@@ -2,18 +2,21 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom';
 import authService from '../service/authService';
 import './header.css'
-
 import { UserContext } from '../service/UserContext';
+import UserStatus from './UserStatus';
+
+/*
+
+Header komponent, den som visas på varje sida.
+Sköter hämtning av användardata, utloggning och visar vem som är inloggad
+*/
 
 function Header() {
-
-
-  const {user, setUser} = useContext(UserContext);
+  
   const navigate = useNavigate();
-
+  const {user, setUser} = useContext(UserContext);
 
   useEffect( () => {
-    
     async function fetchProfileData() {
       const result = await authService.fetchProfileData(); 
       setUser(result)
@@ -32,17 +35,7 @@ function Header() {
     <header className='page-header'>
         <h1>Booksters website</h1>
 
-        <div className="user-status-container">
-          {user !== undefined && user.role && <>
-            <p>Browsing as {user.role.toLowerCase()} {user.username}</p>
-            <button className='sign-btn' onClick={signOut}>Sign out</button>
-          </>}
-          {(user === undefined || user.role === undefined) && <>
-            <p>Browsing as guest...</p>
-            <Link to="/login" className='sign-btn'>Sign in</Link>
-          </>}
-
-        </div>
+        <UserStatus signOut={signOut}></UserStatus>
     </header>
   )
 }

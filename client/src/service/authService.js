@@ -1,3 +1,10 @@
+/*
+
+Fil som sköter inloggning, registrering och hämtning av användardata
+
+*/
+
+
 async function handleLogin(e, credentials) {
     e.preventDefault()
     const options = {

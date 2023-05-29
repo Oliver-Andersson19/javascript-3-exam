@@ -12,7 +12,7 @@
     display: flex;
     justify-content: space-between;
 
-    height: 3em;
+    height: 3rem;
 }
 
 .books-container header input {
@@ -20,17 +20,33 @@
     padding: 0em 0em 0em 1em;
 }
 
-.books-container .btn-wrapper {
-    
+.books-container .add-new-btn {
+    position: absolute;
+    top:0px;
+    left:0px;
+    transform: translateY(-100%);
+
+    width: 100%;
+
+    height: 3rem;
+    padding: .5 .5em;
+
+    border: none;
+
+    background-color: gray;
+    color: white;
+
+    cursor: pointer;
 }
 
-.books-container .btn-wrapper button {
+.books-container header .btn-wrapper button {
     border: none;
     height: 100%;    
 
     padding: 0em 3em;
 
     cursor: pointer;
+
 }
 
 
@@ -38,7 +54,6 @@
 .books-container main table {
     width: 100%;
     border-collapse: collapse;
-
     
 }
 
@@ -49,14 +64,18 @@
 .books-container main table td, .books-container main table th {
     padding: .5rem;
     border: 2px solid black;
-
+    
     
 }
 
 
 .books-container main table th {
+    position: relative;
+    
     text-align: center;
     font-size: 1.4rem;
+    
+    font-weight: 400;
 }
 
 .books-container main table td {

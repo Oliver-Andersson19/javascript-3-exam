@@ -1,6 +1,10 @@
 import React, { useEffect, useState, createRef} from 'react'
 import SearchBar from './SearchBar';
 
+/*
+Bokvyn för inloggade användare (ej admin)
+*/
+
 function UserBookView() {
   
   const [books, setBooks] = useState([]);

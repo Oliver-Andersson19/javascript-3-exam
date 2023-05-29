@@ -6,6 +6,10 @@ import UserBookView from '../components/UserBookView'
 import GuestBookView from '../components/GuestBookView'
 import './books.css'
 
+/*
+Routen /books, renderar rätt vy beroende på vilken roll användaren har
+*/
+
 function Books() {
 
   const {user, setUser} = useContext(UserContext);

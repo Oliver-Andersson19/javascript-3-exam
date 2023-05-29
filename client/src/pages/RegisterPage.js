@@ -4,6 +4,10 @@ import authService from '../service/authService';
 import Header from '../components/Header';
 import './registerPage.css'
 
+/*
+Routen /register, sköter registrering
+*/
+
 function RegisterPage() {
   
   const [loginResultText, setLoginResultText] = useState("");

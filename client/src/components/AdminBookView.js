@@ -1,5 +1,21 @@
 import React, { useEffect, useState, createRef } from 'react'
 import SearchBar from './SearchBar';
+import Modal from './Modal';
+import { fetchUsersAndBooks, orderBook } from '../service/bookService';
+
+
+/*
+
+Bokvyn för admins
+
+Realtidsuppdateringen sköts i useEffect där tiden mellan varje
+anrop ökar om inte något har ändrats på servern. Om det har skett
+en ändring på servern så börjar intervallet om.
+
+
+MÅSTE IMPLEMENTERAS FÖR DOM ANDRA ANVÄNDARNA OCKSÅ!!! KOM IHÅG!
+*/
+
 
 function AdminBookView() {
 
@@ -8,59 +24,79 @@ function AdminBookView() {
     const [books, setBooks] = useState([]);
     const [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        const options = {
-          method: 'GET',
-          headers: {
-              'Authorization': 'Bearer '+ sessionStorage.getItem("JWT_TOKEN"), 
-          }
-        }
+    const [displayModal, setDisplayModal] = useState(false);
+    const [action, setAction] = useState("");
+    const [query, setQuery] = useState("");
+
+    const [polling, setPolling] = useState({
+        interval: 1000,
+        maxTimeout: 3000,
+        version: 0
+    })
+
+    const [timer, setTimer] = useState(0);
+
+    useEffect(()=>{ // short-polling funktion
+        const myTimeout = setTimeout( async () => {
+            
+            const result = await fetchUsersAndBooks();
+
+            if(polling.version === result.booksResult.version) { // om inget nytt
+                if(polling.interval < polling.maxTimeout) {
+                    setPolling({...polling, interval: polling.interval + 1000, version: result.booksResult.version})
+                } else {
+                    setPolling({...polling, interval: polling.maxTimeout, version: result.booksResult.version})
+                }
+            } else { // om det kom nytt
+                setPolling({...polling, interval: 1000, version: result.booksResult.version})
+                setUsers(result.usersResult);
+                setBooks(result.booksResult.books);
+            }
+
+            console.log("Interval: " + polling.interval)
+            setTimer((ele) => ele + 1);
+        }, polling.interval);
     
-        async function fetchData() {
-          let usersResult = await fetch("http://127.0.0.1:3000/admin/users", options);
-          let booksResult = await fetch("http://127.0.0.1:3000/library/books", options);
-          if(usersResult.status === 200 && booksResult.status === 200) {
-            usersResult = await usersResult.json()
-            booksResult = await booksResult.json()
-            setUsers(usersResult);
-            setBooks(booksResult.books);
-
-            console.log(usersResult)
-            console.log(booksResult)
-          } else {
-            console.log("No valid JWT");
-          }
+        return () => {
+            clearTimeout(myTimeout)
         }
-        
-        fetchData();
-    }, [])
+    },[timer])
 
+    useEffect(() => {
+        // updateData()
+    }, [])
+    
+    
+    
+    async function updateData() {
+        
+        const result = await fetchUsersAndBooks();
+
+        setPolling({...polling, version: result.booksResult.version}) // uppdatera versionen på datan
+        setUsers(result.usersResult);
+        setBooks(result.booksResult.books);
+        
+    }
+    
 
     function switchView(view) {
         setCurrentView(view)
     }
 
-    async function orderBook(book, amount) {
-        const options = {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer '+ sessionStorage.getItem("JWT_TOKEN"),
-            'Content-Type': "application/json"
-          },
-          body: JSON.stringify({
-            title: book,
-            quantity: amount
-          })
-        }
-    
-        let result = await fetch("http://127.0.0.1:3000/library/user/books", options);
-        result = await result.json()
-        if(result.status === 200) {
-          // om det gick bra
-          console.log(result)
-        } else {
-          console.log(result)
-        }
+
+    function handleOrderClick(book, amount) {
+        orderBook(book, amount);
+        updateData();
+    }
+
+    function closeModal() {
+        setDisplayModal(false);
+    }
+
+    function openModal(action, query) {
+        setAction(action)
+        setQuery(query)
+        setDisplayModal(true);
     }
 
     return (
@@ -72,13 +108,16 @@ function AdminBookView() {
                     <button onClick={() => switchView("users")} className={currentView === "users" ? 'active' : ''}>Users</button>
                 </div>
             </header>
+            {displayModal && <Modal action={action} item={query} closeModal={closeModal} updateData={updateData}/>}
             <main>
-                
                 {currentView === "books" && <table>
                     <tr>
                         <th>Title</th>
                         <th>Author</th>
-                        <th>Quantity</th>
+                        <th>
+                            <button className='add-new-btn' onClick={() => openModal("add book")}>Add new Book</button>
+                            Quantity
+                        </th>
                         <th>Order</th>
                         <th>Action</th>
                     </tr>
@@ -90,11 +129,11 @@ function AdminBookView() {
                             <td>{book.quantity}</td>
                             <td>
                                 <input type="number" name="amount" ref={ref}/>
-                                <button onClick={() => orderBook(book.title, ref.current.value)}>Order</button>
+                                <button onClick={() => handleOrderClick(book.title, ref.current.value)}>Order</button>
                             </td>
                             <td>
-                                <button>Edit</button>
-                                <button>Delete</button>
+                                <button onClick={() => openModal("edit book", book)}>Edit</button>
+                                <button onClick={() => openModal("delete book", book)}>Delete</button>
                             </td>
                         </tr>
                     })}
@@ -113,8 +152,8 @@ function AdminBookView() {
                             <td>{user.role}</td>
                             <td>{user.purchases ? user.purchases.length : 0} purchases</td>
                             <td>
-                                <button>Promote</button>
-                                <button>Delete</button>
+                                <button onClick={() => openModal("promote user", user)}>Promote</button>
+                                <button onClick={() => openModal("delete user", user)}>Delete</button>
                             </td>
                         </tr>
                     })}

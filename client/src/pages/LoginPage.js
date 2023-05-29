@@ -4,6 +4,11 @@ import authService from '../service/authService';
 import Header from '../components/Header';
 import './loginPage.css'
 
+
+/*
+Routen /login, sköter inloggning och omdirigering
+*/
+
 function LoginPage() {
   
   const navigate = useNavigate();

@@ -1,6 +1,11 @@
 import React, { useState, useEffect, createRef} from 'react'
 import SearchBar from './SearchBar';
 
+
+/*
+Bokvyn för gästanvändare
+*/
+
 function GuestBookView() {
     
   const [currentView, setCurrentView] = useState("books");

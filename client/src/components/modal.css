@@ -1,0 +1,79 @@
+.modal-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    width: 100vw;
+    height: 100vh;
+    
+    background-color: rgba(0, 0, 0, 0.4);
+
+    cursor: default;
+}
+
+.delete-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    
+    max-width: 25rem;
+    padding: 3rem;
+    
+    background-color: white;
+    text-align: center;
+    
+    font-size: 1.2rem;
+    font-weight: 300;
+    
+    z-index: 1;
+}
+
+.delete-modal h2 {
+    font-weight: 300;
+}
+
+
+.delete-modal .input-wrapper p {
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+
+
+.delete-modal .input-wrapper input {
+    width: 100%;
+    padding: .5em;
+}
+
+
+
+
+
+.delete-modal .btn-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+
+}
+
+.delete-modal .btn-wrapper button {
+    
+    padding: 1rem 1rem;
+
+    flex: 0 0 45%;
+
+    border: none;
+    cursor: pointer;
+    white-space:nowrap;
+}
+
+.delete-modal .proceed {
+    background-color: gray;
+    color: white;
+}
