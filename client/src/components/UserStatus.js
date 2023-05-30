@@ -17,11 +17,11 @@ function UserStatus({signOut}) {
         <div className="user-status-container">
             {user !== undefined && user.role && <>
                 <p>Browsing as {user.role.toLowerCase()} {user.username}</p>
-                <button className='sign-btn' onClick={signOut}>Sign out</button>
+                <button className='sign-btn' onClick={signOut} data-testid="sign-btn">Sign out</button>
             </>}
-            {(user === undefined || user.role === undefined) && <>
+            {(user === undefined || user.role === undefined || user.role === "") && <>
                 <p>Browsing as guest...</p>
-                <Link to="/login" className='sign-btn'>Sign in</Link>
+                <Link to="/login" className='sign-btn' data-testid="sign-btn">Sign in</Link>
             </>}
         </div>
     )

@@ -1,6 +1,7 @@
 import SearchBar from "./SearchBar";
 import { search } from "../service/searchService.js";
 import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from "react-router-dom";
 
 
 /*
@@ -13,7 +14,7 @@ Testning utav Sökkomponenten
 
 // Kolla så att den renderas...
 test("Check if searchbar is rendering", () => {
-    render(<SearchBar />);
+    render(<BrowserRouter><SearchBar /></BrowserRouter>);
   
     const SearchbarField = screen.getByTestId('searchbar');
       
