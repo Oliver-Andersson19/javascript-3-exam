@@ -67,9 +67,10 @@ function AdminBookView() {
     }, [])
     
     
+
+
     
     async function updateData() {
-        
         const result = await fetchUsersAndBooks();
 
         setPolling({...polling, version: result.booksResult.version}) // uppdatera versionen på datan
@@ -78,6 +79,14 @@ function AdminBookView() {
         
     }
     
+
+    function handleOrderChange(e) { // tillåter användaren att bara skriva in siffor
+        if(!/^[0-9\b]+$/.test(e.key) && e.key !== "Backspace"){
+            e.preventDefault();
+        }
+
+    }
+
 
     function switchView(view) {
         setCurrentView(view)
@@ -102,7 +111,8 @@ function AdminBookView() {
     return (
         <div className='books-container'>
             <header>
-                <SearchBar setBooks={(books) => setBooks(books)}></SearchBar>
+
+                <SearchBar setBooks={(books) => setBooks(books)} currentView={currentView}></SearchBar>
                 <div className="btn-wrapper">
                     <button onClick={() => switchView("books")} className={currentView === "books" ? 'active' : ''}>Books</button>
                     <button onClick={() => switchView("users")} className={currentView === "users" ? 'active' : ''}>Users</button>
@@ -115,8 +125,12 @@ function AdminBookView() {
                         <th>Title</th>
                         <th>Author</th>
                         <th>
-                            <button className='add-new-btn' onClick={() => openModal("add book")}>Add new Book</button>
-                            Quantity
+                            <div className="wrapper">
+                                Quantity
+                                <button className='add-new-btn' onClick={() => openModal("add book")}>
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                            </div>
                         </th>
                         <th>Order</th>
                         <th>Action</th>
@@ -128,12 +142,12 @@ function AdminBookView() {
                             <td>{book.author}</td>
                             <td>{book.quantity}</td>
                             <td>
-                                <input type="number" name="amount" ref={ref}/>
-                                <button onClick={() => handleOrderClick(book.title, ref.current.value)}>Order</button>
+                                <input type="text" name="amount" ref={ref} onKeyDown={handleOrderChange}/>
+                                <button onClick={() => handleOrderClick(book.title, parseInt(ref.current.value))} className='order-btn'>Order</button>
                             </td>
                             <td>
-                                <button onClick={() => openModal("edit book", book)}>Edit</button>
-                                <button onClick={() => openModal("delete book", book)}>Delete</button>
+                                <button onClick={() => openModal("edit book", book)} className='action-btn'>Edit</button>
+                                <button onClick={() => openModal("delete book", book)} className=' action-btn delete'>Delete</button>
                             </td>
                         </tr>
                     })}
@@ -152,8 +166,8 @@ function AdminBookView() {
                             <td>{user.role}</td>
                             <td>{user.purchases ? user.purchases.length : 0} purchases</td>
                             <td>
-                                <button onClick={() => openModal("promote user", user)}>Promote</button>
-                                <button onClick={() => openModal("delete user", user)}>Delete</button>
+                                <button onClick={() => openModal("promote user", user)} className='action-btn'>Promote</button>
+                                <button onClick={() => openModal("delete user", user)} className='action-btn delete'>Delete</button>
                             </td>
                         </tr>
                     })}

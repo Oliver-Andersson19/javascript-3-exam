@@ -1,43 +1,57 @@
 .books-section {
     flex: 1;
 
-    width: 80%;
+    min-width: 60%;
 
 
-    margin: 4em auto 0em auto;
+    margin: 5em auto 0em auto;
+    padding: 3em 2.5rem;
 
+    background-color: white;
+
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
 }
 
 .books-container header {
+
+    
     display: flex;
     justify-content: space-between;
-
+    
     height: 3rem;
 }
 
 .books-container header input {
+    height: 100%;
     width: 15rem;
     padding: 0em 0em 0em 1em;
 }
 
-.books-container .add-new-btn {
-    position: absolute;
-    top:0px;
-    left:0px;
-    transform: translateY(-100%);
+.books-container .wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:.5em;
 
-    width: 100%;
+    font-weight: inherit;
+}
 
-    height: 3rem;
-    padding: .5 .5em;
+.books-container .wrapper .add-new-btn {
+    height: 100%;
+    padding: .3rem;
 
     border: none;
-
-    background-color: gray;
-    color: white;
+    color: var(--white-text-color);
+    background-color: var(--accent-color);
 
     cursor: pointer;
-}
+
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+    -webkit-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+    -moz-box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+}   
 
 .books-container header .btn-wrapper button {
     border: none;
@@ -46,7 +60,7 @@
     padding: 0em 3em;
 
     cursor: pointer;
-
+    background-color: var(--background-color);
 }
 
 
@@ -54,27 +68,21 @@
 .books-container main table {
     width: 100%;
     border-collapse: collapse;
-    
+    /* table-layout: fixed; */
 }
 
-.books-container main table tr {
-    
+.books-container main table tr:nth-child(odd) {
+    background-color: var(--background-color);
 }
 
 .books-container main table td, .books-container main table th {
-    padding: .5rem;
-    border: 2px solid black;
-    
-    
+    padding: 1rem;
+    text-align: center;
 }
 
 
 .books-container main table th {
-    position: relative;
-    
-    text-align: center;
     font-size: 1.4rem;
-    
     font-weight: 400;
 }
 
@@ -84,9 +92,66 @@
 
 
 
-.active {
-    background-color: gray;
-    color: white;
+.books-container main table input {
+    width: 3em;
+
+    padding: .5rem 0.1rem;
+    text-align: center;
+    border: 1px solid var(--gray-text-color)
+}
+
+.books-container main table .order-btn {
+    
+    margin-left: 1em;
+    padding: .5rem 1rem;
+
+    border: none;
+
+    background-color: var(--accent-color);
+    color: var(--white-text-color);
+
+    cursor: pointer;
+}
+
+.books-container main table .action-btn {
+    
+    padding: .5rem 1rem;
+    margin: 0em .5em;
+    
+    background-color: var(--accent-color);
+    color: var(--white-text-color);
+    
+    border: none;
+
+    font-weight: 400;
+
+    cursor: pointer;
 }
 
 
+
+
+
+
+
+
+
+
+.delete {
+    background-color: var(--delete-color) !important;
+    color: var(--white-text-color)
+}
+
+.active {
+    background-color: var(--accent-color) !important;
+    color: white;
+    
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.212);
+    -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.212);
+    -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.212);
+}
+
+.hide {
+    visibility: hidden;
+    pointer-events: none;
+}

@@ -18,7 +18,7 @@ function RegisterPage() {
     
   const handleSubmit = async (e) => {
     const result = await authService.handleRegister(e, credentials);
-    setLoginResultText(result)         
+    setLoginResultText(result.error || result.message)
   }
 
   return (
@@ -42,6 +42,7 @@ function RegisterPage() {
           <p>Already have an account? Sign in <Link to="/login" className='register-link'>here!</Link></p>
 
           <button onClick={handleSubmit} className="login-btn">Register new account</button>
+          <Link to="/books" className='register-btn' data-testid="guest-login">Proceed as guest user</Link>
       </form>
     </section>
     </>

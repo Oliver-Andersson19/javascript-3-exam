@@ -46,8 +46,9 @@ async function handleRegister(e, credentials) {
       body: JSON.stringify({username: credentials.username, password: credentials.password})
     }
 
-    const response = await fetch("http://127.0.0.1:3000/auth/register" , options)
-    return await response.text()
+    let response = await fetch("http://127.0.0.1:3000/auth/register" , options)
+    response = await response.json()
+    return response
 
 }
 

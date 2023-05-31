@@ -3,7 +3,7 @@ import { search } from '../service/searchService';
 
 
 
-function SearchBar({setBooks}) {
+function SearchBar({setBooks, currentView}) {
 
     let timeoutId;
 
@@ -20,7 +20,8 @@ function SearchBar({setBooks}) {
         <input type="text"
             placeholder='Search...'
             onChange={handleChange}
-            data-testid="searchbar"/>
+            data-testid="searchbar"
+            className={currentView === "users" ? "hide" : ""}/>
     )
 }
 

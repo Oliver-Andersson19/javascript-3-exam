@@ -1,0 +1,40 @@
+.user-status-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+
+    position: absolute;
+    right: 1em;
+
+    height: 100%;
+
+    color: var(--gray-text-color)
+}
+
+.user-status-container .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.user-status-container .wrapper .username {
+    font-weight: 400;
+}
+
+.user-status-container .wrapper .role {
+    opacity: 0.6;
+}
+
+.user-status-container .sign-btn {
+    padding: .5rem 1rem;
+
+    border: none;
+
+    color: var(--white-text-color);
+    background-color: var(--accent-color);
+
+    text-decoration: none;
+    cursor: pointer;
+}

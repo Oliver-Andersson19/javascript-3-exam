@@ -25,7 +25,7 @@
     max-width: 25rem;
     padding: 3rem;
     
-    background-color: white;
+    background-color: var(--white-text-color);
     text-align: center;
     
     font-size: 1.2rem;
@@ -71,9 +71,13 @@
     border: none;
     cursor: pointer;
     white-space:nowrap;
+
+    font-weight: 400;
+
+    background-color: var(--gray-text-color);
+    color: var(--white-text-color);
 }
 
 .delete-modal .proceed {
-    background-color: gray;
-    color: white;
+    background-color: var(--accent-color) !important;
 }

@@ -33,7 +33,10 @@ function Header() {
  
   return (
     <header className='page-header'>
-        <h1>Booksters website</h1>
+      <div className="wrapper">
+      <i class="fa-solid fa-book-open"></i>
+        <h1>Booksters</h1>
+      </div>
 
         <UserStatus signOut={signOut}></UserStatus>
     </header>

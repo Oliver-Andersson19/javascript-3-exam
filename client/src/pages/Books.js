@@ -30,9 +30,10 @@ function Books() {
               return <GuestBookView></GuestBookView>
           }
         })()}
-          
-          
       </section>
+      <div className="footer">
+        asd
+      </div>
     </>
   )
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, createRef} from 'react'
 import SearchBar from './SearchBar';
-import { fetchBooks } from '../service/bookService';
+import { fetchBooks, orderBook } from '../service/bookService';
 
 /*
 Bokvyn för inloggade användare (ej admin)
@@ -45,26 +45,32 @@ function UserBookView() {
   },[timer])
 
 
-  async function orderBook(book, amount) {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer '+ sessionStorage.getItem("JWT_TOKEN"),
-        'Content-Type': "application/json"
-      },
-      body: JSON.stringify({
-        title: book,
-        quantity: amount
-      })
-    }
 
-    let result = await fetch("http://127.0.0.1:3000/library/user/books", options);
+  async function updateData() {
+    const result = await fetchBooks();
+
+    setPolling({...polling, version: result.booksResult.version}) // uppdatera versionen på datan
+    setBooks(result.booksResult.books);
+    
+  }
+
+  function handleOrderChange(e) { // tillåter användaren att bara skriva in siffor
+    if(!/^[0-9\b]+$/.test(e.key) && e.key !== "Backspace"){
+        e.preventDefault();
+    }
+  }
+
+  async function handleOrderClick(book, amount) {
+    orderBook(book, amount);
+    updateData()
   }
 
   return (
     <div className='books-container'>
       <header>
+        <div className="wrapper">
           <SearchBar setBooks={(books) => setBooks(books)}></SearchBar>
+        </div>
       </header>
       <main>
           
@@ -82,8 +88,8 @@ function UserBookView() {
               <td>{book.author}</td>
               <td>{book.quantity} left</td>
               <td>
-                <input type="number" name="amount" ref={ref}/>
-                <button onClick={() => orderBook(book.title, ref.current.value)}>Order</button>
+                <input type="text" name="amount" ref={ref} onKeyDown={handleOrderChange}/>
+                <button onClick={() => handleOrderClick(book.title, parseInt(ref.current.value))} className='order-btn'>Order</button>
               </td>
             </tr>
           })}

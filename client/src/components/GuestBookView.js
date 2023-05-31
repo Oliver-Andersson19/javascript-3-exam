@@ -49,7 +49,9 @@ function GuestBookView() {
   return (
     <div className='books-container'>
       <header>
-        <SearchBar setBooks={(books) => setBooks(books)}></SearchBar>
+        <div className="wrapper">
+          <SearchBar setBooks={(books) => setBooks(books)}></SearchBar>
+        </div>
       </header>
       <main>
           
