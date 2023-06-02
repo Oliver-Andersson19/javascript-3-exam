@@ -12,6 +12,8 @@ function GuestBookView() {
 
   const [books, setBooks] = useState([]);
 
+  
+  
   const [polling, setPolling] = useState({
     interval: 1000,
     maxTimeout: 3000,
@@ -25,18 +27,18 @@ function GuestBookView() {
         
         const result = await fetchBooks();
 
-        if(polling.version === result.booksResult.version) { // om inget nytt
+        if(polling.version === result.booksResult.version) { // om inget nytt, öka tiden till nästa anrop
             if(polling.interval < polling.maxTimeout) {
                 setPolling({...polling, interval: polling.interval + 1000, version: result.booksResult.version})
             } else {
                 setPolling({...polling, interval: polling.maxTimeout, version: result.booksResult.version})
             }
-        } else { // om det kom nytt
+        } else { // om det kom nytt, börja om intervallet
             setPolling({...polling, interval: 1000, version: result.booksResult.version})
             setBooks(result.booksResult.books);
         }
 
-        console.log("Interval: " + polling.interval)
+        console.log("Interval: " + polling.interval) // Endast för att visa i redovisning 
         setTimer((ele) => ele + 1);
     }, polling.interval);
 
@@ -45,6 +47,9 @@ function GuestBookView() {
     }
   },[timer])
 
+
+
+  
 
   return (
     <div className='books-container'>

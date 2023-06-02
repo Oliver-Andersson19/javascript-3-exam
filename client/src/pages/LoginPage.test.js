@@ -20,6 +20,7 @@ test('check so that guest login works', async () => {
 
     const loginAsGuestBtn = screen.getByTestId("guest-login");
 
+
     expect(global.window.location.pathname).toBe('/'); // bekräfta att vi är på startsidan
     fireEvent.click(loginAsGuestBtn); // Tryck på logga in som gäst knappen
     expect(global.window.location.pathname).toBe('/books'); // bekräfta att vi är inne i /books

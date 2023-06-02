@@ -28,7 +28,6 @@ afterEach(() => {
 });
 
 
-// Kolla så att den renderas...
 test("Test if fetching userdata works", async () => {
     
     

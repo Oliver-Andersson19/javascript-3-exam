@@ -1,4 +1,6 @@
 .purchases-btn {
+    position: relative;
+
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -18,9 +20,6 @@
 
 }
 
-.purchase-cell {
-    position: relative;
-}
 
 .purchases-modal {
     position: absolute;
@@ -29,10 +28,11 @@
     width: auto;
     padding: 1em;
 
-    top: 3.6em;
-    right: 1.5em;
+    top: 3.1em;
+    right: -.4em;
     
     border-radius: 5px;
+    color: var(--black-text-color);
     background-color: var(--white-text-color);
 
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
