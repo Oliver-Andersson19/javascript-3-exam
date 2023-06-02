@@ -26,7 +26,7 @@
 .books-container header input {
     height: 100%;
     width: 15rem;
-    padding: 0em 0em 0em 1em;
+    padding: 0em 0em 0em .5em;
 }
 
 .books-container .wrapper {
@@ -39,10 +39,16 @@
 }
 
 .books-container .wrapper .add-new-btn {
-    height: 100%;
-    padding: .3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
+    height: 1.8em;
+    width: 1.8em;
+
+    border-radius: 2px;
     border: none;
+
     color: var(--white-text-color);
     background-color: var(--accent-color);
 
@@ -54,10 +60,13 @@
 }   
 
 .books-container header .btn-wrapper button {
-    border: none;
     height: 100%;    
-
+    
     padding: 0em 3em;
+    
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border: none;
 
     cursor: pointer;
     background-color: var(--background-color);
@@ -68,8 +77,8 @@
 .books-container main table {
     width: 100%;
     border-collapse: collapse;
-    /* table-layout: fixed; */
 }
+
 
 .books-container main table tr:nth-child(odd) {
     background-color: var(--background-color);
@@ -105,6 +114,7 @@
     margin-left: 1em;
     padding: .5rem 1rem;
 
+    border-radius: 2px;
     border: none;
 
     background-color: var(--accent-color);

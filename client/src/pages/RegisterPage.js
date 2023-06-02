@@ -9,7 +9,7 @@ Routen /register, sköter registrering
 */
 
 function RegisterPage() {
-  
+
   const [loginResultText, setLoginResultText] = useState("");
   const [credentials, setCredentials] = useState({
         username: "",

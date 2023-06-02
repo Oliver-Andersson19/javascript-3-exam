@@ -2,6 +2,7 @@ import React, { useEffect, useState, createRef } from 'react'
 import SearchBar from './SearchBar';
 import Modal from './Modal';
 import { fetchUsersAndBooks, orderBook } from '../service/bookService';
+import PurchasesList from './PurchasesList';
 
 
 /*
@@ -108,6 +109,7 @@ function AdminBookView() {
         setDisplayModal(true);
     }
 
+
     return (
         <div className='books-container'>
             <header>
@@ -120,7 +122,7 @@ function AdminBookView() {
             </header>
             {displayModal && <Modal action={action} item={query} closeModal={closeModal} updateData={updateData}/>}
             <main>
-                {currentView === "books" && <table>
+                {currentView === "books" && <table className='books-table'>
                     <tr>
                         <th>Title</th>
                         <th>Author</th>
@@ -153,7 +155,7 @@ function AdminBookView() {
                     })}
                 </table>}
 
-                {currentView === "users" && <table>
+                {currentView === "users" && <table className='books-table'>
                     <tr>
                         <th>Username</th>
                         <th>Role</th>
@@ -161,10 +163,13 @@ function AdminBookView() {
                         <th>Action</th>
                     </tr>
                     {users.map((user, index) => {
+                        
                         return <tr key={index}>
                             <td>{user.username}</td>
                             <td>{user.role}</td>
-                            <td>{user.purchases ? user.purchases.length : 0} purchases</td>
+                            <td className='purchase-cell'>
+                                <PurchasesList purchases={user.purchases}></PurchasesList>
+                            </td>
                             <td>
                                 <button onClick={() => openModal("promote user", user)} className='action-btn'>Promote</button>
                                 <button onClick={() => openModal("delete user", user)} className='action-btn delete'>Delete</button>
