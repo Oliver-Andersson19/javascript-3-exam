@@ -1,6 +1,6 @@
 # Kursprojekt - Bookster
 
-Sista kursprojektet vi fick första året under min frontend-utbildningingen  
+Sista kursprojektet vi fick under första året på frontend-utbildningen
 
 Se video-demo på  
 https://www.oliver-andersson.se
