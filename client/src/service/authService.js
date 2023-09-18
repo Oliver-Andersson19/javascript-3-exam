@@ -18,10 +18,18 @@ async function handleLogin(e, credentials) {
 
     
     const response = await fetch("http://127.0.0.1:3000/auth/login" , options)
+      
     
     if(response.status === 200) {
       // Ger tillbaka true om login gick igenom
-      const data = await response.json();
+
+      let data;
+
+      try {
+        data = await response.json();
+      } catch {
+        data = "error parsing json data"
+      }
       sessionStorage.setItem("JWT_TOKEN", data.accessToken)
       return true;
     
@@ -64,8 +72,16 @@ async function fetchProfileData() {
   let result = await fetch("http://127.0.0.1:3000/library/profile", options);
   
   if(result.status === 200) {
-    result = await result.json()
-    return result.user
+
+    let data;
+
+    try {
+      data = await result.json();
+    } catch {
+      data = "error parsing json data"
+    }
+    // result = await result.json()
+    return data.user
   }
 
 }
